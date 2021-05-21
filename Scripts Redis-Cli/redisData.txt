@@ -1,0 +1,152 @@
+HSET cliente:111111 dni '111111' nombre 'Antonio' apellidos 'Aguirre' domicilio 'Pez 20, 1º A' telefono '999418768'
+HSET cliente:222222 dni '222222' nombre 'Jorge' apellidos 'Anguiano López' domicilio 'Churruca 2, 6º D' telefono '999876737'
+HSET cliente:333333 dni '333333' nombre 'Pilar' apellidos 'Méndez Alonso' domicilio 'Gran Via 167' telefono '999343543'
+HSET cliente:444444 dni '444444' nombre 'Azucena' apellidos 'Rubio del Val' domicilio 'Brasil 63, 2º A' telefono '999456765'
+HSET cliente:555555 dni '555555' nombre 'Raúl' apellidos 'Gutiérrez González' domicilio 'Literatos 3, 5º' telefono '999876234'
+HSET cliente:666666 dni '666666' nombre 'Santiago' apellidos 'Rivera Romero' domicilio 'Avda. de la Paz 30' telefono '999111232'
+HSET cliente:777777 dni '777777' nombre 'Pedro' apellidos 'González Hernando' domicilio 'Castellana 290, 9º B' telefono '999232221'
+HSET cliente:888888 dni '888888' nombre 'Antonio' apellidos 'Díaz Martín' domicilio 'Cuba 1' telefono '999444554'
+HSET cliente:999999 dni '999999' nombre 'Virginia' apellidos 'Fernández Fernández' domicilio 'Brasil 65, 3º' telefono '999009009'
+HSET cliente:000000 dni '000000' nombre 'Francisco' apellidos 'Vilansó Rodríguez' domicilio 'General Rodrigos 24' telefono '999666565'
+
+HSET precio:individual tipo 'individual'  precio 75
+HSET precio:doble tipo 'doble'  precio 90
+
+HSET formapago:efectivo forma 'efectivo'  comision 0
+HSET formapago:tarjeta forma 'tarjeta'  comision 1
+HSET formapago:talon forma 'talon'  comision 2
+
+HSET habitacion:100 numero 100   superficie 17  bar 'SI'  terraza 'SI'  puedesupletoria 'SI'  tipo 'doble' 
+HSET habitacion:101 numero 101   superficie 17  bar 'SI'  terraza 'SI'  puedesupletoria 'SI'  tipo 'doble' 
+HSET habitacion:102 numero 102   superficie 17  bar 'SI'  terraza 'SI'  puedesupletoria 'SI'  tipo 'individual' 
+HSET habitacion:200 numero 200   superficie 17  bar 'SI'  terraza 'SI'  puedesupletoria 'SI'  tipo 'doble' 
+HSET habitacion:201 numero 201   superficie 17  bar 'SI'  terraza 'SI'  puedesupletoria 'NO'  tipo 'doble' 
+HSET habitacion:202 numero 202   superficie 15  bar 'SI'  terraza 'SI'  puedesupletoria 'NO'  tipo 'individual' 
+HSET habitacion:203 numero 203   superficie 15  bar 'NO'  terraza 'SI'  puedesupletoria 'SI'  tipo 'individual' 
+HSET habitacion:204 numero 204   superficie 17  bar 'SI'  terraza 'SI'  puedesupletoria 'SI'  tipo 'doble' 
+HSET habitacion:300 numero 300   superficie 17  bar 'NO'  terraza 'SI'  puedesupletoria 'SI'  tipo 'doble' 
+HSET habitacion:301 numero 301   superficie 17  bar 'SI'  terraza 'SI'  puedesupletoria 'SI'  tipo 'doble' 
+
+HSET servicio:1 cods 1  descripcion 'tintoreria'  costeinterno 50  numreg 1
+HSET servicio:2 cods 2  descripcion 'plancha'  costeinterno 30  numreg 2
+HSET servicio:3 cods 3  descripcion 'lavanderia'  costeinterno 60  numreg 3
+HSET servicio:4 cods 4  descripcion 'bar'  costeinterno 15  numreg 4
+HSET servicio:5 cods 5  descripcion 'restaurante'  costeinterno 50  numreg 8
+HSET servicio:6 cods 6  descripcion 'floristeria'  costeinterno 25  numreg 9
+
+HSET empleado:1 numreg 1  nombre 'Luisa Blanco Baroja'  incorporacion '1996-10-23'  sueldo 1000  cods 1
+HSET empleado:2 numreg 2  nombre 'Fernando Serrano Vázquez'  incorporacion '1996-10-23'  sueldo 1000  cods 2
+HSET empleado:3 numreg 3  nombre 'Manuel Pérez Calo'  incorporacion '2000-01-01'  sueldo 900  cods 3
+HSET empleado:4 numreg 4  nombre 'Ana Troncoso Calvo'  incorporacion '2000-01-01'  sueldo 900  cods 4
+HSET empleado:5 numreg 5  nombre 'Alba Troncoso Calvo'  incorporacion '2002-09-13'  sueldo   cods 1
+HSET empleado:6 numreg 6  nombre 'Jorge Alonso Alonso'  incorporacion '2002-09-13'  sueldo   cods 5
+HSET empleado:7 numreg 7  nombre 'Fernando Soaje Alvarez'  incorporacion '2010-01-01'  sueldo   cods 5
+HSET empleado:8 numreg 8  nombre 'Rosa Luigi Paz'  incorporacion '2010-01-01'  sueldo 1000  cods 5
+HSET empleado:9 numreg 9  nombre 'Rafael Fuertes Cabrera'  incorporacion '2010-01-01'  sueldo 1100  cods 6
+HSET empleado:10 numreg 10  nombre 'Antonio Sancho Sancho'  incorporacion '2010-01-01'  sueldo 1000  cods 
+HSET empleado:11 numreg 11  nombre 'María Gonzalo Fuentes'  incorporacion '2010-01-01'  sueldo 1000  cods 
+HSET empleado:12 numreg 12  nombre 'Juana Peláez Trasto'  incorporacion '2010-01-01'  sueldo 900  cods 
+HSET empleado:13 numreg 13  nombre 'Gonzalo Cabezas Muiño'  incorporacion '2010-01-01'  sueldo 1500  cods 
+
+HSET proveedor:121212T nif '121212T'  nombre 'Carnes SA'  direccion 'Plaza de los de Acá 20'  numreg 8
+HSET proveedor:343434L nif '343434L'  nombre 'Logística Pérez'  direccion 'Calle del Pueblo 30, 1º'  numreg 1
+HSET proveedor:545454Q nif '545454Q'  nombre 'Prd. Quimicos SA'  direccion 'Colombiana 34'  numreg 12
+
+HSET factura_prov:1 codfp 1  fecha '21/03/2010'  importe 1500  nif '121212T'  numreg 8
+HSET factura_prov:2 codfp 2  fecha '21/04/2010'  importe 1000  nif '121212T'  numreg 8
+HSET factura_prov:3 codfp 3  fecha '21/05/2010'  importe 500  nif '121212T'  numreg 8
+HSET factura_prov:4 codfp 4  fecha '21/06/2010'  importe 976  nif '121212T'  numreg 8
+HSET factura_prov:5 codfp 5  fecha '21/03/2010'  importe 345  nif '343434L'  numreg 1
+HSET factura_prov:6 codfp 6  fecha '21/05/2010'  importe 235  nif '343434L'  numreg 1
+HSET factura_prov:7 codfp 7  fecha '21/07/2010'  importe 1000  nif '343434L'  numreg 1
+HSET factura_prov:8 codfp 8  fecha '21/08/2010'  importe 765  nif '343434L'  numreg 1
+HSET factura_prov:9 codfp 9  fecha '21/03/2010'  importe 1235  nif '545454Q'  numreg 12
+HSET factura_prov:10 codfp 10  fecha '11/04/2010'  importe 2342  nif '545454Q'  numreg 12
+HSET factura_prov:11 codfp 11  fecha '15/06/2010'  importe 2567  nif '545454Q'  numreg 12
+
+HSET reserva:111111:101 dni '111111'  numero 101  entrada '2011-02-01'  salida '2011-02-04'
+HSET reserva:111111:102 dni '111111'  numero 102  entrada '2011-02-03'  salida '2011-02-04'
+HSET reserva:222222:300 dni '222222'  numero 300  entrada '2011-02-02'  salida '2011-02-06'
+HSET reserva:777777:203 dni '777777'  numero 203  entrada '2011-02-17'  salida '2011-02-19'
+HSET reserva:777777:204 dni '777777'  numero 204  entrada '2011-03-25'  salida '2011-03-27'
+HSET reserva:999999:200 dni '999999'  numero 200  entrada '2011-02-11'  salida '2011-02-15'
+
+HSET limpieza:10:101:2010-08-20 numreg 10 numero 101 fecha '2010-08-20' 
+HSET limpieza:10:101:2010-08-21 numreg 10 numero 101 fecha '2010-08-21' 
+HSET limpieza:10:101:2010-08-22 numreg 10 numero 101 fecha '2010-08-22' 
+HSET limpieza:10:101:2010-08-23 numreg 10 numero 101 fecha '2010-08-23' 
+HSET limpieza:10:102:2010-08-24 numreg 10 numero 102 fecha '2010-08-24' 
+HSET limpieza:10:202:2010-09-23 numreg 10 numero 202 fecha '2010-09-23' 
+HSET limpieza:10:203:2010-09-23 numreg 10 numero 203 fecha '2010-09-23' 
+HSET limpieza:10:204:2010-09-30 numreg 10 numero 204 fecha '2010-09-30' 
+HSET limpieza:10:300:2010-10-01 numreg 10 numero 300 fecha '2010-10-01' 
+HSET limpieza:10:301:2010-10-01 numreg 10 numero 301 fecha '2010-10-01' 
+HSET limpieza:11:100:2010-08-01 numreg 11 numero 100 fecha '2010-08-01' 
+HSET limpieza:11:100:2010-09-01 numreg 11 numero 100 fecha '2010-09-01' 
+HSET limpieza:11:100:2010-10-01 numreg 11 numero 100 fecha '2010-10-01' 
+HSET limpieza:11:100:2010-10-02 numreg 11 numero 100 fecha '2010-10-02' 
+HSET limpieza:11:101:2010-08-10 numreg 11 numero 101 fecha '2010-08-10' 
+HSET limpieza:11:101:2010-08-14 numreg 11 numero 101 fecha '2010-08-14' 
+HSET limpieza:11:101:2010-09-10 numreg 11 numero 101 fecha '2010-09-10' 
+HSET limpieza:11:102:2010-08-15 numreg 11 numero 102 fecha '2010-08-15' 
+HSET limpieza:11:200:2010-08-10 numreg 11 numero 200 fecha '2010-08-10' 
+HSET limpieza:11:201:2010-09-10 numreg 11 numero 201 fecha '2010-09-10' 
+HSET limpieza:11:202:2010-09-10 numreg 11 numero 202 fecha '2010-09-10' 
+HSET limpieza:11:203:2010-01-10 numreg 11 numero 203 fecha '2010-01-10' 
+HSET limpieza:11:204:2010-01-10 numreg 11 numero 204 fecha '2010-01-10' 
+HSET limpieza:11:301:2010-01-01 numreg 11 numero 301 fecha '2010-01-01' 
+HSET limpieza:11:301:2010-01-07 numreg 11 numero 301 fecha '2010-01-07' 
+HSET limpieza:11:301:2010-01-10 numreg 11 numero 301 fecha '2010-01-10' 
+HSET limpieza:12:100:2010-09-10 numreg 12 numero 100 fecha '2010-09-10' 
+HSET limpieza:12:101:2010-09-10 numreg 12 numero 101 fecha '2010-09-10' 
+HSET limpieza:12:102:2010-09-10 numreg 12 numero 102 fecha '2010-09-10' 
+HSET limpieza:12:200:2010-09-10 numreg 12 numero 200 fecha '2010-09-10' 
+HSET limpieza:12:201:2010-09-11 numreg 12 numero 201 fecha '2010-09-11' 
+HSET limpieza:12:202:2010-09-11 numreg 12 numero 202 fecha '2010-09-11' 
+HSET limpieza:12:203:2010-09-11 numreg 12 numero 203 fecha '2010-09-11' 
+HSET limpieza:12:204:2010-09-11 numreg 12 numero 204 fecha '2010-09-11' 
+HSET limpieza:12:300:2010-09-12 numreg 12 numero 300 fecha '2010-09-12' 
+HSET limpieza:12:301:2010-09-12 numreg 12 numero 301 fecha '2010-09-12' 
+
+HSET incluye:1:1:2010-01-01 codigof 1  cods 1  coste 25  fecha '2010-01-01' 
+HSET incluye:1:2:2010-01-01 codigof 1  cods 2  coste 15  fecha '2010-01-01' 
+HSET incluye:3:3:2010-09-01 codigof 3  cods 3  coste 25  fecha '2010-09-01' 
+HSET incluye:3:3:2010-09-02 codigof 3  cods 3  coste 25  fecha '2010-09-02' 
+HSET incluye:3:3:2010-09-03 codigof 3  cods 3  coste 25  fecha '2010-09-03' 
+HSET incluye:3:2:2010-09-01 codigof 3  cods 2  coste 10  fecha '2010-09-01' 
+HSET incluye:3:2:2010-09-03 codigof 3  cods 2  coste 20  fecha '2010-09-03' 
+HSET incluye:3:1:2010-09-01 codigof 3  cods 1  coste 10  fecha '2010-09-01' 
+HSET incluye:3:5:2010-09-02 codigof 3  cods 5  coste 43  fecha '2010-09-02' 
+HSET incluye:5:5:2010-11-01 codigof 5  cods 5  coste 25  fecha '2010-11-01' 
+HSET incluye:5:5:2010-11-02 codigof 5  cods 5  coste 28  fecha '2010-11-02' 
+HSET incluye:5:5:2010-11-03 codigof 5  cods 5  coste 33  fecha '2010-11-03' 
+HSET incluye:5:5:2010-11-04 codigof 5  cods 5  coste 24  fecha '2010-11-04' 
+HSET incluye:5:3:2010-11-02 codigof 5  cods 3  coste 13  fecha '2010-11-02' 
+HSET incluye:7:6:2010-11-02 codigof 7  cods 6  coste 20  fecha '2010-11-02' 
+HSET incluye:9:4:2010-05-15 codigof 9  cods 4  coste 6  fecha '2010-05-15' 
+HSET incluye:9:4:2010-05-16 codigof 9  cods 4  coste 8  fecha '2010-05-16' 
+HSET incluye:9:5:2010-05-16 codigof 9  cods 5  coste 24  fecha '2010-05-16' 
+HSET incluye:13:2:2010-05-03 codigof 13  cods 2  coste 10  fecha '2010-05-03' 
+HSET incluye:13:2:2010-05-04 codigof 13  cods 2  coste 10  fecha '2010-05-04' 
+HSET incluye:15:5:2010-08-15 codigof 15  cods 5  coste 45  fecha '2010-08-15' 
+HSET incluye:15:4:2010-08-15 codigof 15  cods 4  coste 5  fecha '2010-08-15' 
+HSET incluye:15:2:2010-08-15 codigof 15  cods 2  coste 13  fecha '2010-08-15' 
+HSET incluye:16:5:2010-08-19 codigof 16  cods 5  coste 32  fecha '2010-08-19' 
+HSET incluye:17:1:2010-08-20 codigof 17  cods 1  coste 10  fecha '2010-08-20' 
+HSET incluye:17:5:2010-08-23 codigof 17  cods 5  coste 30  fecha '2010-08-23' 
+
+HSET usa:10:101:2010-08-20 cods 10  servicio_cods 101  fecha '2010-08-20' 
+HSET usa:5:1:2010-08-25 cods 5  servicio_cods 1  fecha '2010-08-25' 
+HSET usa:5:1:2010-08-30 cods 5  servicio_cods 1  fecha '2010-08-30' 
+HSET usa:5:1:2010-09-24 cods 5  servicio_cods 1  fecha '2010-09-24' 
+HSET usa:5:2:2010-08-18 cods 5  servicio_cods 2  fecha '2010-08-18' 
+HSET usa:5:2:2010-09-01 cods 5  servicio_cods 2  fecha '2010-09-01' 
+HSET usa:5:3:2010-09-05 cods 5  servicio_cods 3  fecha '2010-09-05' 
+HSET usa:5:4:2010-09-20 cods 5  servicio_cods 4  fecha '2010-09-20' 
+HSET usa:5:4:2010-09-29 cods 5  servicio_cods 4  fecha '2010-09-29' 
+HSET usa:5:6:2010-09-25 cods 5  servicio_cods 6  fecha '2010-09-25' 
+HSET usa:4:2:2010-09-17 cods 4  servicio_cods 2  fecha '2010-09-17' 
+HSET usa:4:2:2010-08-29 cods 4  servicio_cods 2  fecha '2010-08-29' 
+HSET usa:4:3:2010-09-01 cods 4  servicio_cods 3  fecha '2010-09-01' 
+HSET usa:4:3:2010-09-05 cods 4  servicio_cods 3  fecha '2010-09-05' 
+HSET usa:4:3:2010-09-19 cods 4  servicio_cods 3  fecha '2010-09-19' 
