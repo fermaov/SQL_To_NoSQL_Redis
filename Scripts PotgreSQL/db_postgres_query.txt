@@ -1,0 +1,106 @@
+Con base en la implementación de la base de datos para el Hotel, generar los scripts SQL necesarios para resolver las siguientes consultas:
+
+1) Obtener un listado de los empleados del hotel, con todos sus datos.
+
+SELECT e.numreg, e.nombre, e.incorporacion, e.sueldo, s.descripcion
+FROM empleado e
+LEFT JOIN servicio s ON e.cods = s.cods
+order by numreg;
+
+2) Obtener el nombre del jefe del servicio de "Restaurante".
+
+SELECT e.nombre
+FROM servicio s
+INNER JOIN empleado e ON s.numreg = e.numreg
+WHERE s.descripcion = 'restaurante'
+
+3) Obtener el nombre del jefe de "Jorge Alonso Alonso".
+
+SELECT j.nombre
+FROM empleado e
+INNER JOIN servicio s ON e.cods = s.cods
+INNER JOIN empleado j ON s.numreg = j.numreg
+WHERE e.nombre = 'Jorge Alonso Alonso'
+
+4) Obtener un listado de los empleados y los servicios a los que están asignados, exclusivamente para aquellos que tengan algún servicio asignado.
+
+SELECT e.nombre, s.descripcion
+FROM empleado e
+INNER JOIN servicio s ON e.cods = s.cods
+
+5) Obtener el número de habitación, tipo y precio de las habitaciones que estén ocupadas en la actualidad (no tienen fecha de salida).
+
+SELECT h.numero, h.tipo, p.precio
+FROM factura f
+INNER JOIN habitacion h ON f.numero = h.numero
+INNER JOIN precio p ON h.tipo = p.tipo
+WHERE f.salida IS NULL
+
+6) Obtener el nombre y apellidos del cliente o clientes que más veces hayan estado en el hotel (no número total de noches, sino estancias diferentes: una persona que ha estado tres veces diferentes de una noche en el hotel habrá "estado" más veces que otra persona que ha estado una vez durante tres noches)
+
+SELECT c.nombre, c.apellidos, count(*) as estancias
+FROM factura f
+INNER JOIN cliente c ON f.dni = c.dni
+GROUP BY c.nombre, c.apellidos
+HAVING count(*) = (
+	SELECT max(total) FROM (
+		SELECT f.dni, count(*) as total
+		FROM factura f
+		GROUP BY f.dni
+	) as T
+)
+
+7) Obtener los datos del empleado o empleados que hayan limpiado todas las habitaciones del hotel
+
+SELECT l.numreg, e.nombre, count(distinct numero) as total
+FROM limpieza l
+INNER JOIN empleado e ON l.numreg = e.numreg
+GROUP BY l.numreg, e.nombre
+HAVING count(distinct numero) = (SELECT count(numero) FROM habitacion)
+
+8) Obtener el listado de los clientes que ocupen o hayan ocupado alguna vez habitaciones de los dos tipos (individual y doble)
+
+SELECT c.nombre, c.apellidos, count(distinct tipo) as estancias
+FROM factura f
+INNER JOIN cliente c ON f.dni = c.dni
+INNER JOIN habitacion h ON f.numero = h.numero
+WHERE h.tipo IN ('individual','doble')
+GROUP BY c.nombre, c.apellidos
+HAVING count(distinct tipo) = 2
+
+9) Obtener un listado de los proveedores cuyas facturas hayan sido aprobadas únicamente por el encargado y no por el responsable de un servicio.
+
+SELECT distinct p.nif, p.nombre
+FROM public.factura_prov f
+INNER JOIN proveedor  p ON f.nif = p.nif
+WHERE f.numreg NOT IN (SELECT distinct numreg FROM servicio)
+
+10) Igualar el sueldo del empleado que menos cobra dentro del servicio de "restaurante" con el del empleado que más cobra del mismo servicio
+
+SELECT e.nombre, e.sueldo, 
+(SELECT max(e.sueldo) as maximo
+	FROM empleado e
+	INNER JOIN servicio s on e.cods = s.cods
+	WHERE s.descripcion ='restaurante' AND sueldo IS NOT NULL
+) as nuevosueldo
+FROM empleado e
+INNER JOIN servicio s on e.cods = s.cods
+WHERE s.descripcion ='restaurante' 
+AND sueldo = (
+	SELECT min(e.sueldo) as minimo
+	FROM empleado e
+	INNER JOIN servicio s on e.cods = s.cods
+	WHERE s.descripcion ='restaurante' AND sueldo IS NOT NULL
+)
+
+11) Incrementar en un 10% el sueldo del empleado de "limpieza" que más habitaciones haya limpiado.
+
+SELECT e.nombre, e.sueldo, e.sueldo * 1.1 as nuevosueldo,count(numero) as total FROM limpieza l
+INNER JOIN empleado e ON l.numreg = e.numreg
+GROUP BY e.nombre, e.sueldo
+HAVING count(numero) = (
+	SELECT max(total) from (
+		SELECT numreg, count(numero) as total FROM limpieza
+		GROUP BY numreg
+	) as T
+)

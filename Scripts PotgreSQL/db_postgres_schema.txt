@@ -1,0 +1,262 @@
+CREATE TABLE cliente
+(
+  dni character varying(9) NOT NULL,
+  nombre character varying(10),
+  apellidos character varying(30),
+  domicilio character varying(30),
+  telefono character varying(9),
+  CONSTRAINT cliente_pkey PRIMARY KEY (dni)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE cliente
+  OWNER TO postgres;
+
+
+CREATE TABLE precio
+(
+  tipo character varying(10) NOT NULL,
+  precio integer,
+  CONSTRAINT precio_pkey PRIMARY KEY (tipo),
+  CONSTRAINT precio_tipo_check CHECK (tipo::text = ANY (ARRAY['individual'::character varying, 'doble'::character varying]::text[]))
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE precio
+  OWNER TO postgres;
+
+
+CREATE TABLE habitacion
+(
+  numero integer NOT NULL,
+  superficie integer,
+  bar character(2),
+  terraza character(2),
+  puedesupletoria character(2),
+  tipo character varying(10) NOT NULL,
+  CONSTRAINT habitacion_pkey PRIMARY KEY (numero),
+  CONSTRAINT habitacion_tipo_fkey FOREIGN KEY (tipo)
+      REFERENCES precio (tipo) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT habitacion_bar_check CHECK (bar = ANY (ARRAY['SI'::bpchar, 'NO'::bpchar])),
+  CONSTRAINT habitacion_puedesupletoria_check CHECK (puedesupletoria = ANY (ARRAY['SI'::bpchar, 'NO'::bpchar])),
+  CONSTRAINT habitacion_terraza_check CHECK (terraza = ANY (ARRAY['SI'::bpchar, 'NO'::bpchar]))
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE habitacion
+  OWNER TO postgres;
+
+
+CREATE TABLE reserva
+(
+  dni character varying(9) NOT NULL,
+  numero integer NOT NULL,
+  entrada date,
+  salida date,
+  CONSTRAINT reserva_pkey PRIMARY KEY (dni, numero),
+  CONSTRAINT reserva_dni_fkey FOREIGN KEY (dni)
+      REFERENCES cliente (dni) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT reserva_numero_fkey FOREIGN KEY (numero)
+      REFERENCES habitacion (numero) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE reserva
+  OWNER TO postgres;
+
+
+CREATE TABLE formapago
+(
+  forma character varying(8) NOT NULL,
+  comision integer,
+  CONSTRAINT formapago_pkey PRIMARY KEY (forma),
+  CONSTRAINT formapago_forma_check CHECK (forma::text = ANY (ARRAY['efectivo'::character varying, 'tarjeta'::character varying, 'talon'::character varying]::text[]))
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE formapago
+  OWNER TO postgres;
+
+
+CREATE TABLE factura
+(
+  codigof integer NOT NULL,
+  entrada date,
+  salida date,
+  dni character varying(9),
+  numero integer NOT NULL,
+  supletoria integer,
+  forma character varying(8) NOT NULL,
+  total real,
+  CONSTRAINT factura_pkey PRIMARY KEY (codigof),
+  CONSTRAINT factura_dni_fkey FOREIGN KEY (dni)
+      REFERENCES cliente (dni) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT factura_forma_fkey FOREIGN KEY (forma)
+      REFERENCES formapago (forma) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT factura_numero_fkey FOREIGN KEY (numero)
+      REFERENCES habitacion (numero) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE factura
+  OWNER TO postgres;
+
+
+CREATE TABLE empleado
+(
+  numreg integer NOT NULL,
+  nombre character varying(32),
+  incorporacion date,
+  sueldo integer,
+  cods integer,
+  CONSTRAINT empleado_pkey PRIMARY KEY (numreg)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE empleado
+  OWNER TO postgres;
+
+
+CREATE TABLE servicio
+(
+  cods integer NOT NULL,
+  descripcion character varying(15),
+  costeinterno integer,
+  numreg integer NOT NULL,
+  CONSTRAINT servicio_pkey PRIMARY KEY (cods),
+  CONSTRAINT servicio_numreg_fkey FOREIGN KEY (numreg)
+      REFERENCES empleado (numreg) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT servicio_descripcion_check CHECK (descripcion::text = ANY (ARRAY['tintoreria'::character varying, 'plancha'::character varying, 'lavanderia'::character varying, 'bar'::character varying, 'restaurante'::character varying, 'floristeria'::character varying]::text[]))
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE servicio
+  OWNER TO postgres;
+
+
+ALTER TABLE empleado
+ADD CONSTRAINT empleado_cods_fkey FOREIGN KEY (cods)
+      REFERENCES servicio (cods) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+
+CREATE TABLE usa
+(
+  cods integer NOT NULL,
+  servicio_cods integer NOT NULL,
+  fecha date NOT NULL,
+  CONSTRAINT usa_pkey PRIMARY KEY (cods, servicio_cods, fecha),
+  CONSTRAINT usa_cods_fkey FOREIGN KEY (cods)
+      REFERENCES servicio (cods) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT usa_servicio_cods_fkey FOREIGN KEY (servicio_cods)
+      REFERENCES servicio (cods) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE usa
+  OWNER TO postgres;
+
+
+CREATE TABLE incluye
+(
+  codigof integer NOT NULL,
+  cods integer NOT NULL,
+  coste integer,
+  fecha date NOT NULL,
+  CONSTRAINT incluye_pkey PRIMARY KEY (codigof, cods, fecha),
+  CONSTRAINT incluye_codigof_fkey FOREIGN KEY (codigof)
+      REFERENCES factura (codigof) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT incluye_cods_fkey FOREIGN KEY (cods)
+      REFERENCES servicio (cods) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE incluye
+  OWNER TO postgres;
+
+
+CREATE TABLE proveedor
+(
+  nif character varying(10) NOT NULL,
+  nombre character varying(16),
+  direccion character varying(30),
+  numreg integer NOT NULL,
+  CONSTRAINT proveedor_pkey PRIMARY KEY (nif),
+  CONSTRAINT proveedor_numreg_fkey FOREIGN KEY (numreg)
+      REFERENCES empleado (numreg) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE proveedor
+  OWNER TO postgres;
+
+
+CREATE TABLE factura_prov
+(
+  codfp integer NOT NULL,
+  fecha date,
+  importe integer,
+  nif character varying(10) NOT NULL,
+  numreg integer NOT NULL,
+  CONSTRAINT factura_prov_pkey PRIMARY KEY (codfp),
+  CONSTRAINT factura_prov_nif_fkey FOREIGN KEY (nif)
+      REFERENCES proveedor (nif) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT factura_prov_numreg_fkey FOREIGN KEY (numreg)
+      REFERENCES empleado (numreg) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE factura_prov
+  OWNER TO postgres;
+
+
+CREATE TABLE limpieza
+(
+  numreg integer NOT NULL,
+  numero integer NOT NULL,
+  fecha date NOT NULL,
+  CONSTRAINT limpieza_pkey PRIMARY KEY (numreg, numero, fecha),
+  CONSTRAINT limpieza_numero_fkey FOREIGN KEY (numero)
+      REFERENCES habitacion (numero) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT limpieza_numreg_fkey FOREIGN KEY (numreg)
+      REFERENCES empleado (numreg) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE limpieza
+  OWNER TO postgres;
+
+
+
+
+
+
